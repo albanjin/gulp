@@ -1,0 +1,22 @@
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.main {
+    width: 100%;
+    height: 100%;
+    background: blue;
+    .box {
+        padding: 20px;
+        border: 1px solid #fff;
+        p {
+            width: 100%;
+            text-align: center;
+            color: red;
+            line-height: 26px;
+            font-size: 18px;
+        }
+    }
+}
