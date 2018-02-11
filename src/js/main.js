@@ -1,0 +1,1 @@
+var jin = ["arr"]
