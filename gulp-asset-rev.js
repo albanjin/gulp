@@ -1,4 +1,6 @@
 // albanjin 
+// 修改js 路径
+// ./node_modules/gulp-asset-rev/index.js
 
 "use strict";
 
@@ -18,12 +20,12 @@ var ASSET_REG = {
     "BACKGROUND": /(url\()(?!data:|about:)([^)]*)/ig
 };
 
-var createHash = function createHash(file, len) {
+var createHash = function(file, len) {
     return crypto.createHash('md5').update(file).digest('hex').substr(0, len);
 };
 
-module.exports = function (options) {
-    return through.obj(function (file, enc, cb) {
+module.exports = function(options) {
+    return through.obj(function(file, enc, cb) {
 
         options = options || {};
 
@@ -40,14 +42,16 @@ module.exports = function (options) {
         var content = file.contents.toString();
 
         var filePath = path.dirname(file.path);
-        console.log("filePath" + filePath);
+        console.log("filePath" + filePath)
 
         for (var type in ASSET_REG) {
-            if (type === "BACKGROUND" && !/\.(css|scss|less)$/.test(file.path)) {} else {
-                content = content.replace(ASSET_REG[type], function (str, tag, src) {
+            if (type === "BACKGROUND" && !/\.(css|scss|less)$/.test(file.path)) {
+
+            } else {
+                content = content.replace(ASSET_REG[type], function(str, tag, src) {
                     src = src.replace(/(^['"]|['"]$)/g, '');
 
-                    console.log(src);
+                    console.log(src)
 
                     if (!/\.[^\.]+$/.test(src)) {
                         return str;
@@ -74,10 +78,11 @@ module.exports = function (options) {
                     // console.log("assetPath " + assetPath)
                     //albanjin 
                     if (assetPath.indexOf("?") > -1) {
-                        assetPath = assetPath.replace(/\?\w{0,}/ig, "");
+                        assetPath = assetPath.replace(/\?\w{0,}/ig, "")
                     }
-                    console.log("assetPath " + assetPath);
-                    console.log("fs.existsSync(assetPath) == " + fs.existsSync(assetPath));
+                    console.log("assetPath " + assetPath)
+                    console.log("fs.existsSync(assetPath) == " + fs.existsSync(assetPath))
+
 
                     if (fs.existsSync(assetPath)) {
 
@@ -95,17 +100,23 @@ module.exports = function (options) {
                         //src = src.replace(src.replace(verStr, ''))
                         if (src.replace(verStr, '').indexOf("?") > -1) {
                             //assetPath = assetPath.replace(/\?\w{0,}/ig, "")
-                            src = src.replace(verStr, '').replace(/\?\w{0,}/ig, "");
+                            src = src.replace(verStr, '').replace(/\?\w{0,}/ig, "")
                         }
-                        src = src.replace(verStr, '') + ('?' + md5);
+                        src = src.replace(verStr, '') + `?${md5}`
 
-                        console.log("################################ 生成hash=> " + src + "################################");
+                        console.log("################################ 生成hash=> " + src + "################################")
+
+
                     } else {
-                        console.log("======" + str);
+                        console.log("======" + str)
                         return str;
                     }
 
                     return tag + '"' + src + '"';
+
+
+
+
                 });
             }
         }
