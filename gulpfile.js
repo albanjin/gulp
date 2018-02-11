@@ -43,35 +43,4 @@ gulp.task('html', () => {
 })
 
 
-// albanjin 
-
-
-//CSS生成文件hash编码并生成 rev-manifest.json文件名对照映射
-gulp.task('revCss', function() {
-        gulp.src("./dist/**/*.css")
-            .pipe(rev())
-            .pipe(rev.manifest())
-            .pipe(gulp.dest('rev/css'))
-    })
-    //js生成文件hash编码并生成 rev-manifest.json文件名对照映射
-gulp.task('revJs', function() {
-    return gulp.src("./dist/**/*.js")
-        .pipe(rev())
-        .pipe(rev.manifest())
-        .pipe(gulp.dest('rev/js'));
-})
-
-//Html替换css、js文件版本
-gulp.task('revHtml', function() {
-    return gulp.src(['rev/**/*.json', 'View/*.html'])
-        .pipe(revCollector())
-        .pipe(gulp.dest('View'));
-})
-
-//开发构建
-gulp.task('dev', function(done) {
-    condition = false;
-    runSequence(
-        ['revCss'], ['revJs'], ['revHtml'],
-        done);
-})
+// albanjin
